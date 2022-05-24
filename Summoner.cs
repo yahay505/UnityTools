@@ -2,21 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Summoner : MonoBehaviour
+namespace UnityTools
 {
-    [SerializeField]
-    bool summonOnStart = false;
-    [SerializeField]
-    GameObject gameObject;
-    public void Summon()
+    public class Summoner : MonoBehaviour
     {
-        Instantiate(gameObject);
-    }
-    private void Start()
-    {
-        if (summonOnStart)
+        [SerializeField]
+        bool summonOnStart = false;
+        [SerializeField]
+        GameObject gameObjectToSummon;
+        public void Summon()
         {
-            Summon();
+            Instantiate(gameObjectToSummon);
+        }
+        private void Start()
+        {
+            if (summonOnStart)
+            {
+                Summon();
+            }
         }
     }
+
 }
