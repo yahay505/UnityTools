@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace YahayTools
+namespace UnityTools
 {
     public class TreeNode<T>
     {
