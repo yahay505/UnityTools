@@ -19,7 +19,7 @@ namespace UnityTools
                     return _main;
                 }
 
-                var holder = new GameObject($"{nameof(T)} Holder", typeof(T));
+                var holder = new GameObject($"{typeof(T).Name} Holder", typeof(T));
                 DontDestroyOnLoad(holder);
                 _main = holder.GetComponent<T>();
                 return _main;

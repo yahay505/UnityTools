@@ -5,9 +5,10 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
+
 namespace UnityTools
 {
-        public class Packet : IDisposable
+    public class Packet : IDisposable
     {
         private List<byte> buffer;
         private byte[] readableBuffer;
@@ -47,6 +48,7 @@ namespace UnityTools
             WriteLength();
             return ToArray();
         }
+
         /// <summary>Sets the packet's content and prepares it to be read.</summary>
         /// <param name="_data">The bytes to add to the packet.</param>
         public void SetBytes(byte[] _data)
@@ -58,7 +60,8 @@ namespace UnityTools
         /// <summary>Inserts the length of the packet's content at the start of the buffer.</summary>
         public void WriteLength()
         {
-            buffer.InsertRange(0, BitConverter.GetBytes(buffer.Count)); // Insert the byte length of the packet at the very beginning
+            buffer.InsertRange(0,
+                BitConverter.GetBytes(buffer.Count)); // Insert the byte length of the packet at the very beginning
         }
 
         /// <summary>Inserts the given int at the start of the buffer.</summary>
@@ -102,55 +105,156 @@ namespace UnityTools
                 readPos -= 4; // "Unread" the last read int
             }
         }
+
         #endregion
 
+        #region With
+
+        /// <summary>Adds a byte to the packet.</summary>
+        /// <param name="_value">The byte to add.</param>
+        public Packet With(byte _value)
+        {
+            Write(_value);
+            return this;
+        }
+
+        /// <summary>Adds an array of bytes to the packet.</summary>
+        /// <param name="_value">The byte array to add.</param>
+        public Packet With(byte[] _value)
+        {
+            Write(_value);
+            return this;
+        }
+
+        /// <summary>Adds a short to the packet.</summary>
+        /// <param name="_value">The short to add.</param>
+        public Packet With(short _value)
+        {
+            Write(_value);
+            return this;
+        }
+
+        /// <summary>Adds an int to the packet.</summary>
+        /// <param name="_value">The int to add.</param>
+        public Packet With(int _value)
+        {
+            Write(_value);
+            return this;
+        }
+
+        public Packet With(uint _value)
+        {
+            Write(_value);
+            return this;
+        }
+
+        /// <summary>Adds a long to the packet.</summary>
+        /// <param name="_value">The long to add.</param>
+        public Packet With(long _value)
+        {
+            Write(_value);
+            return this;
+        }
+
+        /// <summary>Adds a float to the packet.</summary>
+        /// <param name="_value">The float to add.</param>
+        public Packet With(float _value)
+        {
+            Write(_value);
+            return this;
+        }
+
+        /// <summary>Adds a bool to the packet.</summary>
+        /// <param name="_value">The bool to add.</param>
+        public Packet With(bool _value)
+        {
+            Write(_value);
+            return this;
+        }
+
+        /// <summary>Adds a string to the packet.</summary>
+        /// <param name="_value">The string to add.</param>
+        public Packet With(string _value)
+        {
+            Write(_value);
+            return this;
+        }
+
+        /// <summary>Adds a Vector3 to the packet.</summary>
+        /// <param name="_value">The Vector3 to add.</param>
+        public Packet With(Vector3 _value)
+        {
+            Write(_value);
+            return this;
+        }
+
+        /// <summary>Adds a Quaternion to the packet.</summary>
+        /// <param name="_value">The Quaternion to add.</param>
+        public Packet With(Quaternion _value)
+        {
+            Write(_value);
+            return this;
+        }
+
+        #endregion
+
+
         #region Write Data
+
         /// <summary>Adds a byte to the packet.</summary>
         /// <param name="_value">The byte to add.</param>
         public void Write(byte _value)
         {
             buffer.Add(_value);
         }
+
         /// <summary>Adds an array of bytes to the packet.</summary>
         /// <param name="_value">The byte array to add.</param>
         public void Write(byte[] _value)
         {
             buffer.AddRange(_value);
         }
+
         /// <summary>Adds a short to the packet.</summary>
         /// <param name="_value">The short to add.</param>
         public void Write(short _value)
         {
             buffer.AddRange(BitConverter.GetBytes(_value));
         }
+
         /// <summary>Adds an int to the packet.</summary>
         /// <param name="_value">The int to add.</param>
         public void Write(int _value)
         {
             buffer.AddRange(BitConverter.GetBytes(_value));
-        }    
+        }
+
         public void Write(uint _value)
         {
             buffer.AddRange(BitConverter.GetBytes(_value));
         }
+
         /// <summary>Adds a long to the packet.</summary>
         /// <param name="_value">The long to add.</param>
         public void Write(long _value)
         {
             buffer.AddRange(BitConverter.GetBytes(_value));
         }
+
         /// <summary>Adds a float to the packet.</summary>
         /// <param name="_value">The float to add.</param>
         public void Write(float _value)
         {
             buffer.AddRange(BitConverter.GetBytes(_value));
         }
+
         /// <summary>Adds a bool to the packet.</summary>
         /// <param name="_value">The bool to add.</param>
         public void Write(bool _value)
         {
             buffer.AddRange(BitConverter.GetBytes(_value));
         }
+
         /// <summary>Adds a string to the packet.</summary>
         /// <param name="_value">The string to add.</param>
         public void Write(string _value)
@@ -159,6 +263,7 @@ namespace UnityTools
             Write(x.Length); // Add the length of the string to the packet
             buffer.AddRange(x); // Add the string itself
         }
+
         /// <summary>Adds a Vector3 to the packet.</summary>
         /// <param name="_value">The Vector3 to add.</param>
         public void Write(Vector3 _value)
@@ -167,6 +272,7 @@ namespace UnityTools
             Write(_value.y);
             Write(_value.z);
         }
+
         /// <summary>Adds a Quaternion to the packet.</summary>
         /// <param name="_value">The Quaternion to add.</param>
         public void Write(Quaternion _value)
@@ -176,9 +282,11 @@ namespace UnityTools
             Write(_value.z);
             Write(_value.w);
         }
+
         #endregion
 
         #region Read Data
+
         /// <summary>Reads a byte from the packet.</summary>
         /// <param name="_moveReadPos">Whether or not to move the buffer's read position.</param>
         public byte ReadByte(bool _moveReadPos = true)
@@ -192,6 +300,7 @@ namespace UnityTools
                     // If _moveReadPos is true
                     readPos += 1; // Increase readPos by 1
                 }
+
                 return _value; // Return the byte
             }
             else
@@ -208,12 +317,15 @@ namespace UnityTools
             if (buffer.Count > readPos)
             {
                 // If there are unread bytes
-                byte[] _value = buffer.GetRange(readPos, _length).ToArray(); // Get the bytes at readPos' position with a range of _length
+                byte[] _value =
+                    buffer.GetRange(readPos, _length)
+                        .ToArray(); // Get the bytes at readPos' position with a range of _length
                 if (_moveReadPos)
                 {
                     // If _moveReadPos is true
                     readPos += _length; // Increase readPos by _length
                 }
+
                 return _value; // Return the bytes
             }
             else
@@ -235,6 +347,29 @@ namespace UnityTools
                     // If _moveReadPos is true and there are unread bytes
                     readPos += 2; // Increase readPos by 2
                 }
+
+                return _value; // Return the short
+            }
+            else
+            {
+                throw new Exception("Could not read value of type 'short'!");
+            }
+        }
+
+        /// <summary>Reads a short from the packet.</summary>
+        /// <param name="_moveReadPos">Whether or not to move the buffer's read position.</param>
+        public ushort ReadUShort(bool _moveReadPos = true)
+        {
+            if (buffer.Count > readPos)
+            {
+                // If there are unread bytes
+                ushort _value = BitConverter.ToUInt16(readableBuffer, readPos); // Convert the bytes to a short
+                if (_moveReadPos)
+                {
+                    // If _moveReadPos is true and there are unread bytes
+                    readPos += 2; // Increase readPos by 2
+                }
+
                 return _value; // Return the short
             }
             else
@@ -256,13 +391,15 @@ namespace UnityTools
                     // If _moveReadPos is true
                     readPos += 4; // Increase readPos by 4
                 }
+
                 return _value; // Return the int
             }
             else
             {
                 throw new Exception("Could not read value of type 'int'!");
             }
-        }    
+        }
+
         /// <summary>Reads an uint from the packet.</summary>
         /// <param name="_moveReadPos">Whether or not to move the buffer's read position.</param>
         public uint ReadUInt(bool _moveReadPos = true)
@@ -276,6 +413,7 @@ namespace UnityTools
                     // If _moveReadPos is true
                     readPos += 4; // Increase readPos by 4
                 }
+
                 return _value; // Return the int
             }
             else
@@ -297,6 +435,7 @@ namespace UnityTools
                     // If _moveReadPos is true
                     readPos += 8; // Increase readPos by 8
                 }
+
                 return _value; // Return the long
             }
             else
@@ -318,6 +457,7 @@ namespace UnityTools
                     // If _moveReadPos is true
                     readPos += 4; // Increase readPos by 4
                 }
+
                 return _value; // Return the float
             }
             else
@@ -339,6 +479,7 @@ namespace UnityTools
                     // If _moveReadPos is true
                     readPos += 1; // Increase readPos by 1
                 }
+
                 return _value; // Return the bool
             }
             else
@@ -354,12 +495,14 @@ namespace UnityTools
             try
             {
                 int _length = ReadInt(); // Get the length of the string
-                string _value = Encoding.UTF8.GetString(readableBuffer, readPos, _length); // Convert the bytes to a string
+                string _value =
+                    Encoding.UTF8.GetString(readableBuffer, readPos, _length); // Convert the bytes to a string
                 if (_moveReadPos && _value.Length > 0)
                 {
                     // If _moveReadPos is true string is not empty
                     readPos += _length; // Increase readPos by the length of the string
                 }
+
                 return _value; // Return the string
             }
             catch
@@ -379,8 +522,10 @@ namespace UnityTools
         /// <param name="_moveReadPos">Whether or not to move the buffer's read position.</param>
         public Quaternion ReadQuaternion(bool _moveReadPos = true)
         {
-            return new Quaternion(ReadFloat(_moveReadPos), ReadFloat(_moveReadPos), ReadFloat(_moveReadPos), ReadFloat(_moveReadPos));
+            return new Quaternion(ReadFloat(_moveReadPos), ReadFloat(_moveReadPos), ReadFloat(_moveReadPos),
+                ReadFloat(_moveReadPos));
         }
+
         #endregion
 
         private bool disposed = false;
@@ -404,6 +549,14 @@ namespace UnityTools
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+    }
+
+    public static class PacketUtils
+    {
+        public static Packet AsPacket(this byte[] bytes)
+        {
+            return new Packet(bytes);
         }
     }
 }
