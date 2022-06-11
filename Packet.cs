@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
+
 namespace UnityTools
 {
         public class Packet : IDisposable
@@ -407,3 +408,4 @@ namespace UnityTools
         }
     }
 }
+
