@@ -2,7 +2,7 @@
 
 namespace UnityTools
 {
-    public class UniversalComponent<T>: MonoBehaviour where T:MonoBehaviour, new()
+    public class UniversalComponent<T>: MonoBehaviour where T:MonoBehaviour
     {
         public static T main
         {
